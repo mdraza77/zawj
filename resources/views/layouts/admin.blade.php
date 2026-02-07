@@ -125,7 +125,7 @@
                 </li>
             </ul>
 
-            <div class="bg-slate-900 rounded-3xl p-5 mt-10 relative overflow-hidden group">
+            {{-- <div class="bg-slate-900 rounded-3xl p-5 mt-10 relative overflow-hidden group">
                 <div class="relative z-10">
                     <p class="text-white font-bold text-sm">Need Help?</p>
                     <p class="text-slate-400 text-[10px] mt-1">Documentation and Support</p>
@@ -136,7 +136,7 @@
                 <div
                     class="absolute -right-4 -bottom-4 bg-pink-600/10 h-24 w-24 rounded-full group-hover:scale-150 transition duration-700">
                 </div>
-            </div>
+            </div> --}}
         </div>
     </aside>
 

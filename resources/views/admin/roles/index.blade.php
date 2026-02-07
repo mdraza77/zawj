@@ -1,159 +1,118 @@
-@extends('layouts.main')
-@section('title', ' Role Management - Poor Graduate')
+@extends('layouts.admin')
+@section('title', 'Role Management - Zawj')
+
 @section('content')
-    <main id="main" class="main">
 
+    @php $sessionTypes = ['success' => 'bg-green-100 text-green-700 border-green-200', 'update' => 'bg-blue-100 text-blue-700 border-blue-200', 'delete' => 'bg-red-100 text-red-700 border-red-200']; @endphp
 
-
-        @if ($message = Session::get('success'))
-            <div class="tt active">
-                <div class="tt-content">
-                    <i class="fas fa-solid fa-check check"></i>
-                    <div class="message">
-                        <span class="text text-1">Success</span>
-                        <span class="text text-2"> {{ $message }}</span>
+    @foreach ($sessionTypes as $key => $class)
+        @if ($message = Session::get($key))
+            <div
+                class="mb-4 p-4 rounded-2xl border {{ $class }} flex items-center justify-between shadow-sm animate-pulse">
+                <div class="flex items-center gap-3">
+                    <i class="fas {{ $key == 'delete' ? 'fa-exclamation-triangle' : 'fa-check-circle' }} text-lg"></i>
+                    <div>
+                        <span class="font-bold block uppercase text-[10px]">{{ $key }}</span>
+                        <span class="text-sm">{{ $message }}</span>
                     </div>
                 </div>
-                <i class="fa-solid fa-xmark close"></i>
-                <div class="pg active"></div>
+                <button onclick="this.parentElement.remove()" class="hover:opacity-70"><i
+                        class="fa-solid fa-xmark"></i></button>
             </div>
         @endif
+    @endforeach
 
-        @if ($message = Session::get('update'))
-            <div class="tt active">
-                <div class="tt-content">
-                    <i class="fas fa-solid fa-check check"></i>
-                    <div class="message">
-                        <span class="text text-1">Update</span>
-                        <span class="text text-2"> {{ $message }}</span>
-                    </div>
-                </div>
-                <i class="fa-solid fa-xmark close"></i>
-                <div class="pg active"></div>
-            </div>
-        @endif
-
-        @if ($message = Session::get('delete'))
-            <div class="tt active">
-                <div class="tt-content">
-                    <i class="fas fa-solid fa-exclamation exclamation update"></i>
-                    <div class="message">
-                        <span class="text text-1">Delete</span>
-                        <span class="text text-2"> {{ $message }}</span>
-                    </div>
-                </div>
-                <i class="fa-solid fa-xmark close"></i>
-                <div class="pg active"></div>
-            </div>
-        @endif
-
-        <div class="dashboard-header pagetitle">
-            <h1>Role Management</h1>
-            <nav>
-                <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
-                    <li class="breadcrumb-item active">Role Management</li>
-                </ol>
+    <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
+        <div>
+            <h1 class="text-2xl font-extrabold text-slate-900 tracking-tight">Role Management</h1>
+            <nav class="flex text-slate-400 text-xs mt-1 font-medium">
+                <a href="{{ route('admin.dashboard') }}" class="hover:text-pink-600 transition">Dashboard</a>
+                <span class="mx-2">/</span>
+                <span class="text-slate-600">Roles</span>
             </nav>
-        </div><!-- End Page Title -->
+        </div>
+        @can('AccessManagement-Create')
+            <a href="{{ route('roles.create') }}"
+                class="bg-pink-600 text-white px-6 py-3 rounded-2xl text-xs font-bold hover:bg-pink-700 transition shadow-lg shadow-pink-100 flex items-center gap-2">
+                <i class="fa-solid fa-plus"></i> Add New Role
+            </a>
+        @endcan
+    </div>
 
-        <section class="section">
-
-
-            <div class="row">
-
-                <div class="col-lg-12">
-
-                    <div class="card pt-4">
-                        <div class="card-body">
-                            <div class="row ">
-                                <div class="col-md-6 col-sm-12">
-                                    <div class="pd-20">
-                                        <h4 class="text-blue h4">Role Management</h4>
-
-                                    </div>
-                                </div>
-                                <div class="col-md-6 col-sm-12 d-flex justify-content-end ">
-
-                                    <div class="btn-group">
-                                        @can('AccessManagement-Create')
-                                            <a class="btn btn-primary mb-4 mr-3 "href="{{ route('roles.create') }}">Add New
-                                                Role</a>
-                                        @endcan
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- Table with stripped rows -->
-                            <table id="Role_Management_table" class="display stripe row-border order-column">
-                                <thead>
-                                    <tr>
-
-                                        <th class="text__left">S. No</th>
-                                        <th>Name</th>
-                                        <th>Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach ($roles as $role)
-                                        <tr id="role_table_td_{{ $role->id }}">
-                                            <td class="text__left">{{ $loop->iteration }}
-                                            </td>
-                                            <td>{{ $role->name }}</td>
-                                            <td>
-                                                <div class="filter">
-                                                    <a class="icon" href="#" data-bs-toggle="dropdown"><i
-                                                            class="bi bi-three-dots"></i></a>
-                                                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                                                        @can('AccessManagement-View')
-                                                            <li>
-                                                                <a class="dropdown-item"
-                                                                    href="{{ route('roles.show', $role->id) }}"><i
-                                                                        class="fa-regular fa-eye"></i> View</a>
-                                                            </li>
-                                                        @endcan
-                                                        <li>
-                                                            @can('AccessManagement-Edit')
-                                                                @if ($role->id != 1)
-                                                                    <a class="dropdown-item"
-                                                                        href="{{ route('roles.edit', $role->id) }}"><i
-                                                                            class="fa-solid fa-pencil"></i>Edit</a>
-                                                                @endif
-                                                            @endcan
-                                                        </li>
-                                                        <li>
-                                                            @can('AccessManagement-Delete')
-                                                                @if ($role->id != 1)
-                                                                    <form method="POST"
-                                                                        action="{{ route('roles.destroy', $role->id) }}">
-                                                                        @csrf
-                                                                        @method('GET')
-                                                                        <button type="button"
-                                                                            class="dropdown-item delete-button">
-                                                                            <i class="fa-solid fa-trash"></i> Delete
-                                                                        </button>
-                                                                    </form>
-                                                                @endif
-                                                            @endcan
-                                                        </li>
-                                                    </ul>
-                                                </div>
-
-                                            </td>
-                                        </tr>
-                                    @endforeach
-
-                                </tbody>
-                            </table>
-                            <!-- End Table with stripped rows -->
-
-                        </div>
-                    </div>
-
-                </div>
+    <div class="bg-white rounded-[2rem] border border-slate-100 shadow-sm overflow-hidden">
+        <div class="p-6 border-b border-slate-50 flex flex-col md:flex-row md:items-center justify-between gap-4">
+            <h4 class="text-lg font-bold text-slate-800 tracking-tight italic">System Roles</h4>
+            <div class="text-[10px] font-bold text-slate-400 uppercase tracking-widest bg-slate-50 px-3 py-1 rounded-lg">
+                Total Roles: {{ count($roles) }}
             </div>
-        </section>
+        </div>
 
-    </main><!-- End #main -->
+        <div class="overflow-x-auto">
+            <table id="Role_Management_table" class="w-full text-left border-collapse">
+                <thead class="bg-slate-50/50 text-[10px] uppercase text-slate-400 font-bold tracking-widest">
+                    <tr>
+                        <th class="px-8 py-4">S. No</th>
+                        <th class="px-8 py-4">Role Name</th>
+                        <th class="px-8 py-4 text-center">Action</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-slate-50">
+                    @foreach ($roles as $role)
+                        <tr id="role_table_td_{{ $role->id }}" class="hover:bg-slate-50/50 transition group">
+                            <td class="px-8 py-5 text-slate-400 font-medium">{{ $loop->iteration }}</td>
+                            <td class="px-8 py-5">
+                                <span
+                                    class="font-bold text-slate-700 group-hover:text-pink-600 transition">{{ $role->name }}</span>
+                            </td>
+                            <td class="px-8 py-5">
+                                <div class="flex justify-center items-center gap-2" x-data="{ open: false }">
+                                    <div class="relative">
+                                        <button @click="open = !open"
+                                            class="p-2 hover:bg-white rounded-xl border border-transparent hover:border-slate-200 transition text-slate-400 hover:text-slate-600">
+                                            <i class="bi bi-three-dots-vertical"></i>
+                                        </button>
 
+                                        <div x-show="open" @click.away="open = false" x-cloak
+                                            class="absolute right-0 mt-2 w-48 bg-white border border-slate-100 rounded-2xl shadow-xl z-50 py-2">
+                                            @can('AccessManagement-View')
+                                                <a class="flex items-center gap-3 px-4 py-2.5 text-xs font-bold text-slate-600 hover:bg-slate-50 hover:text-pink-600"
+                                                    href="{{ route('roles.show', $role->id) }}">
+                                                    <i class="fa-regular fa-eye text-base"></i> View Details
+                                                </a>
+                                            @endcan
+
+                                            @can('AccessManagement-Edit')
+                                                @if ($role->id != 1)
+                                                    <a class="flex items-center gap-3 px-4 py-2.5 text-xs font-bold text-slate-600 hover:bg-slate-50 hover:text-blue-600"
+                                                        href="{{ route('roles.edit', $role->id) }}">
+                                                        <i class="fa-solid fa-pencil text-base"></i> Edit Role
+                                                    </a>
+                                                @endif
+                                            @endcan
+
+                                            @can('AccessManagement-Delete')
+                                                @if ($role->id != 1)
+                                                    <hr class="my-2 border-slate-50">
+                                                    <form method="POST" action="{{ route('roles.destroy', $role->id) }}"
+                                                        class="block">
+                                                        @csrf
+                                                        @method('GET')
+                                                        <button type="button"
+                                                            class="w-full flex items-center gap-3 px-4 py-2.5 text-xs font-bold text-red-500 hover:bg-red-50 delete-button">
+                                                            <i class="fa-solid fa-trash text-base"></i> Delete Role
+                                                        </button>
+                                                    </form>
+                                                @endif
+                                            @endcan
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
+    </div>
 
 @endsection

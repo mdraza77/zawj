@@ -1,585 +1,206 @@
-@extends('layouts.main')
-@section('title', 'User Management - Poor Graduate')
+@extends('layouts.admin')
+@section('title', 'User Management - Zawj')
+
 @section('content')
-    <main id="main" class="main">
-        <!-- Main Form -->
-        <div class="container-fluid">
-            <!-- Page Header -->
-            <div class="card card-primary mb-4">
-                <div class="card-body">
-                    <div class="d-flex justify-content-between align-items-center">
-                        <div>
-                            <h1 class="page-title mb-0">User Management Details</h1>
-                            <nav aria-label="breadcrumb">
-                                <ol class="breadcrumb mb-0">
-                                    <li class="breadcrumb-item"><a href="{{ url('/dashboard') }}">Home</a></li>
-                                    <li class="breadcrumb-item active" aria-current="page">User Management</li>
-                                </ol>
-                            </nav>
-                        </div>
+
+    @php
+        $sessionTypes = [
+            'success' => 'bg-green-100 text-green-700 border-green-200',
+            'update' => 'bg-blue-100 text-blue-700 border-blue-200',
+            'delete' => 'bg-red-100 text-red-700 border-red-200',
+        ];
+    @endphp
+
+    @foreach ($sessionTypes as $key => $class)
+        @if ($message = Session::get($key))
+            <div
+                class="mb-4 p-4 rounded-2xl border {{ $class }} flex items-center justify-between shadow-sm animate-in fade-in slide-in-from-top-4 duration-300">
+                <div class="flex items-center gap-3">
+                    <i class="fas {{ $key == 'delete' ? 'fa-exclamation-triangle' : 'fa-check-circle' }} text-lg"></i>
+                    <div>
+                        <span class="font-bold block uppercase text-[10px] tracking-widest">{{ $key }}</span>
+                        <span class="text-sm font-medium">{{ $message }}</span>
                     </div>
                 </div>
+                <button onclick="this.parentElement.remove()" class="hover:opacity-70 transition"><i
+                        class="fa-solid fa-xmark"></i></button>
+            </div>
+        @endif
+    @endforeach
+
+    <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
+        <div class="bg-white p-6 rounded-3xl border border-slate-100 shadow-sm flex-1">
+            <h1 class="text-2xl font-black text-slate-900 tracking-tight">User Management Details</h1>
+            <nav class="flex text-slate-400 text-xs mt-1 font-semibold">
+                <a href="{{ url('/dashboard') }}" class="hover:text-pink-600 transition">Home</a>
+                <span class="mx-2 text-slate-300 text-[10px]">></span>
+                <span class="text-slate-600 italic">User Management</span>
+            </nav>
+        </div>
+
+        @can('UserManagement-Create')
+            <a href="{{ route('users.create') }}"
+                class="bg-pink-600 text-white px-8 py-4 rounded-3xl text-sm font-bold hover:bg-pink-700 transition shadow-xl shadow-pink-100 flex items-center gap-3">
+                <i class="fas fa-user-plus"></i> Add New User
+            </a>
+        @endcan
+    </div>
+
+    <div class="bg-white rounded-[2.5rem] border border-slate-100 shadow-sm overflow-hidden">
+        <div class="p-8 border-b border-slate-50 flex flex-col md:flex-row md:items-center justify-between gap-6">
+            <div>
+                <h4 class="text-xl font-bold text-slate-800 tracking-tight">Community Directory</h4>
+                <p class="text-[10px] text-red-500 font-bold uppercase tracking-widest mt-1 italic">Note: System Admins
+                    cannot be deleted</p>
             </div>
 
-            @if ($message = Session::get('success'))
-                <div class="tt active">
-                    <div class="tt-content">
-                        <i class="fas fa-solid fa-check check"></i>
-                        <div class="message">
-                            <span class="text text-1">Success</span>
-                            <span class="text text-2"> {{ $message }}</span>
-                        </div>
-                    </div>
-                    <i class="fa-solid fa-xmark close"></i>
-                    <div class="pg active"></div>
-                </div>
-            @endif
+            <div class="add_btn_row_in_user_table flex gap-2" style="display: none">
+                @can('UserManagement-View')
+                    <button
+                        class="px-4 py-2 bg-slate-100 text-slate-700 rounded-xl text-xs font-bold hover:bg-slate-200 transition"
+                        id="user_table_view_btn">View</button>
+                @endcan
+                @can('UserManagement-Edit')
+                    <button
+                        class="px-4 py-2 bg-blue-100 text-blue-700 rounded-xl text-xs font-bold hover:bg-blue-200 transition"
+                        id="user_table_edit_btn">Edit</button>
+                @endcan
+                @can('UserManagement-Delete')
+                    <button class="px-4 py-2 bg-red-100 text-red-700 rounded-xl text-xs font-bold hover:bg-red-200 transition"
+                        id="user_table_delete_btn">Delete</button>
+                @endcan
+            </div>
+        </div>
 
-            @if ($message = Session::get('update'))
-                <div class="tt active">
-                    <div class="tt-content">
-                        <i class="fas fa-solid fa-check check"></i>
-                        <div class="message">
-                            <span class="text text-1">Update</span>
-                            <span class="text text-2"> {{ $message }}</span>
-                        </div>
-                    </div>
-                    <i class="fa-solid fa-xmark close"></i>
-                    <div class="pg active"></div>
-                </div>
-            @endif
-
-            @if ($message = Session::get('delete'))
-                <div class="tt active">
-                    <div class="tt-content">
-                        <i class="fas fa-solid fa-exclamation exclamation update"></i>
-                        <div class="message">
-                            <span class="text text-1">Delete</span>
-                            <span class="text text-2"> {{ $message }}</span>
-                        </div>
-                    </div>
-                    <i class="fa-solid fa-xmark close"></i>
-                    <div class="pg active"></div>
-                </div>
-            @endif
-
-            <section class="section">
-                <div class="row">
-                    <div class="col-lg-12">
-                        <div class="card">
-                            <div class="card-body">
-                                <div class="row pt-4">
-                                    <div class="col-md-6 col-sm-12">
-                                        <div class="pd-20">
-                                            <h4 class="text-blue h4">User Management</h4>
-                                            <em style="color: red"> Note: Admin can't be deleted</em><br>
-                                        </div>
+        <div class="overflow-x-auto">
+            <table id="User_Management_table" class="w-full text-left border-collapse">
+                <thead class="bg-slate-50/50 text-[10px] uppercase text-slate-400 font-bold tracking-[0.15em]">
+                    <tr>
+                        <th class="px-8 py-5 border-b border-slate-50">#</th>
+                        <th class="px-8 py-5 border-b border-slate-50">User Profile</th>
+                        <th class="px-8 py-5 border-b border-slate-50">Role</th>
+                        <th class="px-8 py-5 border-b border-slate-50">Mobile</th>
+                        <th class="px-8 py-5 border-b border-slate-50">Email</th>
+                        <th class="px-8 py-5 border-b border-slate-50">Status</th>
+                        <th class="px-8 py-5 border-b border-slate-50 text-center">Actions</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-slate-50">
+                    @foreach ($data as $key => $user)
+                        <tr class="hover:bg-slate-50/30 transition group">
+                            <td class="px-8 py-6 text-slate-400 font-medium">{{ $loop->iteration }}</td>
+                            <td class="px-8 py-6">
+                                <div class="flex items-center gap-4">
+                                    <div
+                                        class="w-11 h-11 bg-pink-50 text-pink-600 rounded-[1rem] flex items-center justify-center font-black text-sm border border-pink-100 group-hover:bg-pink-600 group-hover:text-white transition duration-300">
+                                        {{ strtoupper(substr($user->name, 0, 1)) }}
                                     </div>
-                                    <div class="col-md-6 col-sm-12 d-flex justify-content-end">
-                                        <div class="me-3 add_btn_row_in_user_table" style="display: none">
-                                            <div class="col-lg-12">
-                                                @can('UserManagement-View')
-                                                    <a class="btn btn-primary" id="user_table_view_btn">View</a>
-                                                @endcan
-                                                @can('UserManagement-Edit')
-                                                    <a class="btn btn-success" id="user_table_edit_btn">Edit</a>
-                                                @endcan
-                                                @can('UserManagement-Delete')
-                                                    <a class="btn btn-danger" id="user_table_delete_btn">Delete</a>
-                                                @endcan
-                                            </div>
-                                        </div>
-                                        @can('UserManagement-Create')
-                                            <div class="btn-group">
-                                                <a class="btn btn-primary mb-4 mr-3" href="{{ route('users.create') }}"><i
-                                                        class="fas fa-user-plus me-2"></i> Add New
-                                                    User</a>
-                                            </div>
-                                        @endcan
+                                    <div>
+                                        <h6 class="text-sm font-bold text-slate-800 leading-none mb-1">{{ $user->name }}
+                                            {{ $user->last_name }}</h6>
+                                        <p class="text-[10px] text-slate-400 font-semibold tracking-wide">
+                                            {{ $user->email }}</p>
                                     </div>
                                 </div>
-                                <!-- Table with stripped rows -->
-                                <table id="User_Management_table" class="display stripe row-border order-column"
-                                    style="width:100%">
-                                    <thead>
-                                        <tr>
-                                            <th class="text__left">S. No</th>
-                                            {{-- <th>Employee ID</th> --}}
-                                            <th>Full Name</th>
-                                            <th>Role</th>
-                                            <th class="text__left">Mobile No.</th>
-                                            <th>Email</th>
-                                            <th>Status</th>
-                                            <th>Action</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @foreach ($data as $key => $user)
-                                            <tr>
-                                                <td class="text__left">{{ $loop->iteration }}</td>
-                                                {{-- <td> {{ $user->employee_id ?? 'N/A' }}</td> --}}
-                                                {{-- <td>{{ $user->name }}</td> --}}
-                                                <td>
-                                                    <div class="d-flex align-items-center">
-                                                        <div class="avatar-sm me-3 bg-soft-primary rounded-circle d-flex align-items-center justify-content-center fw-bold text-primary"
-                                                            style="width: 40px; height: 40px; background: #eef2ff;">
-                                                            {{ strtoupper(substr($user->name, 0, 1)) }}
-                                                        </div>
-                                                        <div>
-                                                            <h6 class="mb-0 fw-bold">{{ $user->name }}
-                                                                {{ $user->last_name }}</h6>
-                                                            {{-- <small class="text-muted">{{ $user->email }}</small> --}}
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    @if (!empty($user->getRoleNames()))
-                                                        @foreach ($user->getRoleNames() as $v)
-                                                            <label class="badge bg-success">{{ $v }}</label>
-                                                        @endforeach
-                                                    @endif
-                                                </td>
-                                                {{-- <td class="text__left">{{ $user->mobile }}</td> --}}
-                                                <td class="text__left">
-                                                    <div class="small fw-500">
-                                                        {{-- <i class="bi bi-phone me-1"></i> --}}
-                                                        {{ $user->mobile }}
-                                                    </div>
-                                                </td>
-                                                <td>{{ $user->email }}</td>
-                                                @if ($user->deleted_at != null)
-                                                    <td><span class="badge bg-danger">Inactive</span></td>
-                                                @else
-                                                    <td><span class="badge bg-success">Active</span></td>
+                            </td>
+                            <td class="px-8 py-6">
+                                @if (!empty($user->getRoleNames()))
+                                    @foreach ($user->getRoleNames() as $v)
+                                        <span
+                                            class="inline-block px-3 py-1 bg-blue-50 text-blue-600 text-[10px] font-black rounded-lg uppercase tracking-wider">{{ $v }}</span>
+                                    @endforeach
+                                @endif
+                            </td>
+                            <td class="px-8 py-6 text-slate-600 font-semibold text-xs">{{ $user->mobile }}</td>
+                            <td class="px-8 py-6 text-slate-500 text-xs">{{ $user->email }}</td>
+                            <td class="px-8 py-6">
+                                @if ($user->deleted_at != null)
+                                    <span
+                                        class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-[10px] font-black bg-red-100 text-red-600 uppercase">
+                                        <span class="w-1 h-1 rounded-full bg-red-600"></span> Inactive
+                                    </span>
+                                @else
+                                    <span
+                                        class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-[10px] font-black bg-green-100 text-green-600 uppercase">
+                                        <span class="w-1 h-1 rounded-full bg-green-600"></span> Active
+                                    </span>
+                                @endif
+                            </td>
+                            <td class="px-8 py-6 text-center" x-data="{ open: false }">
+                                <div class="relative">
+                                    <button @click="open = !open"
+                                        class="p-2 text-slate-400 hover:text-pink-600 hover:bg-slate-50 rounded-xl transition">
+                                        <i class="bi bi-three-dots-vertical"></i>
+                                    </button>
+
+                                    <div x-show="open" @click.away="open = false" x-cloak
+                                        class="absolute right-0 mt-2 w-48 bg-white border border-slate-100 rounded-2xl shadow-xl z-50 py-2 animate-in fade-in zoom-in-95 duration-150">
+                                        @can('UserManagement-View')
+                                            <a class="flex items-center gap-3 px-4 py-2.5 text-xs font-bold text-slate-600 hover:bg-slate-50 hover:text-pink-600"
+                                                href="{{ route('users.show', $user->id) }}">
+                                                <i class="fa-regular fa-eye"></i> View Profile
+                                            </a>
+                                        @endcan
+
+                                        @can('UserManagement-Edit')
+                                            @if ($user->id != 1 && !$user->hasAnyRole(['Super Admin']))
+                                                @if ($user->deleted_at == null)
+                                                    <a class="flex items-center gap-3 px-4 py-2.5 text-xs font-bold text-slate-600 hover:bg-slate-50 hover:text-blue-600"
+                                                        href="{{ route('users.edit', $user->id) }}">
+                                                        <i class="fa-solid fa-pencil"></i> Edit Details
+                                                    </a>
                                                 @endif
-                                                <td>
-                                                    <div class="filter">
-                                                        <a class="icon" href="#" data-bs-toggle="dropdown"><i
-                                                                class="bi bi-three-dots"></i></a>
-                                                        <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                                                            @can('UserManagement-View')
-                                                                <li> <a class="dropdown-item"
-                                                                        href="{{ route('users.show', $user->id) }}"><i
-                                                                            class="fa-regular fa-eye"></i> View</a>
-                                                                </li>
-                                                            @endcan
+                                            @endif
+                                        @endcan
 
-                                                            @can('UserManagement-Edit')
-                                                                <li>
-                                                                    @if ($user->id != 1 && !$user->hasAnyRole(['Super Admin']))
-                                                                        @if ($user->deleted_at == null)
-                                                                            <a class="dropdown-item"
-                                                                                href="{{ route('users.edit', $user->id) }}"><i
-                                                                                    class="fa-solid fa-pencil"></i>Edit</a>
-                                                                        @endif
-                                                                    @endif
-                                                                </li>
-                                                            @endcan
-                                                            <li>
-                                                                @if ($user->id != 1 && !$user->hasAnyRole(['Super Admin']))
-                                                                    @if ($user->deleted_at != null)
-                                                                        {{-- Activate Button Logic --}}
-                                                                        @can('UserManagement-Delete')
-                                                                            <form method="POST"
-                                                                                action="{{ route('users.resoter', $user->id) }}">
-                                                                                @csrf
-                                                                                @method('DELETE')
-                                                                                <button type="button"
-                                                                                    class="dropdown-item activate-button">
-                                                                                    <i
-                                                                                        class="fa-solid fa-rotate-right me-2 text-success"></i>
-                                                                                    Activate
-                                                                                </button>
-                                                                            </form>
-                                                                        @endcan
-                                                                    @else
-                                                                        {{-- Inactive Button Logic --}}
-                                                                        @can('UserManagement-Delete')
-                                                                            <form method="POST"
-                                                                                action="{{ route('users.destroy', $user->id) }}">
-                                                                                @csrf
-                                                                                @method('DELETE')
-                                                                                <button type="button"
-                                                                                    class="dropdown-item inactive-button">
-                                                                                    <i
-                                                                                        class="fa-solid fa-power-off me-2 text-danger"></i>
-                                                                                    Inactive
-                                                                                </button>
-                                                                            </form>
-                                                                        @endcan
-                                                                    @endif
-                                                                @endif
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                        @endforeach
-                                    </tbody>
-                                </table>
-                                <!-- End Table with stripped rows -->
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
+                                        <hr class="my-2 border-slate-50">
 
-            <style>
-                /* Design System Variables */
-                :root {
-                    --primary-color: #4361ee;
-                    --secondary-color: #3f37c9;
-                    --success-color: #4cc9f0;
-                    --info-color: #4895ef;
-                    --warning-color: #f72585;
-                    --danger-color: #e63946;
-                    --light-color: #f8f9fa;
-                    --dark-color: #212529;
-                    --gray-100: #f8f9fa;
-                    --gray-200: #e9ecef;
-                    --gray-300: #dee2e6;
-                    --gray-400: #ced4da;
-                    --gray-500: #adb5bd;
-                    --gray-600: #6c757d;
-                    --gray-700: #495057;
-                    --gray-800: #343a40;
-                    --gray-900: #212529;
-
-                    --border-radius: 8px;
-                    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-                    --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-                    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-
-                    --card-padding: 1.5rem;
-                    --card-border: 1px solid var(--gray-200);
-                }
-
-                /* Card Header Section */
-                .card-header-section {
-                    border-left: 4px solid var(--info-color);
-                }
-
-                .page-title {
-                    font-size: 1.5rem;
-                    font-weight: 600;
-                    color: var(--gray-800);
-                    margin-bottom: 0.25rem;
-                }
-
-                .breadcrumb {
-                    background-color: transparent;
-                    padding: 0;
-                    margin: 0;
-                    font-size: 0.9rem;
-                }
-
-                .breadcrumb-item {
-                    display: flex;
-                    align-items: center;
-                }
-
-                .breadcrumb-item a {
-                    color: var(--primary-color);
-                    text-decoration: none;
-                    transition: color 0.15s ease;
-                }
-
-                .breadcrumb-item a:hover {
-                    color: var(--secondary-color);
-                }
-
-                .breadcrumb-item+.breadcrumb-item::before {
-                    content: ">";
-                    color: var(--gray-400);
-                    padding: 0 0.5rem;
-                }
-
-                .breadcrumb-item.active {
-                    color: var(--gray-700);
-                    font-weight: 500;
-                }
-
-                /* Alert Styles */
-                .alert {
-                    border: none;
-                    border-radius: var(--border-radius);
-                    padding: 0.75rem 1rem;
-                    margin-bottom: 1rem;
-                }
-
-                .alert-body {
-                    display: flex;
-                    align-items: center;
-                    gap: 0.5rem;
-                }
-
-                .alert-success {
-                    background-color: #d1e7dd;
-                    color: #0f5132;
-                }
-
-                .alert-danger {
-                    background-color: #f8d7da;
-                    color: #842029;
-                }
-
-                .btn-close {
-                    background: none;
-                    border: none;
-                    opacity: 0.5;
-                }
-
-                .btn-close:hover {
-                    opacity: 1;
-                }
-
-                /* Card Styles */
-                .card {
-                    border: var(--card-border);
-                    border-radius: var(--border-radius);
-                    box-shadow: var(--shadow);
-                    margin-bottom: 1.5rem;
-                    transition: box-shadow 0.15s ease;
-                }
-
-                .card:hover {
-                    box-shadow: var(--shadow-lg);
-                }
-
-                .card-primary {
-                    border-left: 4px solid var(--primary-color);
-                }
-
-                .card-secondary {
-                    border-left: 4px solid var(--success-color);
-                }
-
-                .card-tertiary {
-                    border-left: 4px solid var(--warning-color);
-                }
-
-                .card-action {
-                    border-left: 4px solid var(--success-color);
-                }
-
-                .card-header {
-                    background-color: white;
-                    border-bottom: 1px solid var(--gray-200);
-                    padding: 1rem var(--card-padding);
-                    border-top-left-radius: var(--border-radius);
-                    border-top-right-radius: var(--border-radius);
-                }
-
-                .card-title {
-                    font-size: 1.1rem;
-                    font-weight: 600;
-                    color: var(--gray-800);
-                    margin: 0;
-                    display: flex;
-                    align-items: center;
-                    gap: 0.5rem;
-                }
-
-                .card-body {
-                    padding: var(--card-padding);
-                }
-
-                /* Form Styles */
-                .form-group {
-                    margin-bottom: 1rem;
-                }
-
-                .form-label {
-                    display: block;
-                    font-weight: 500;
-                    color: var(--gray-700);
-                    margin-bottom: 0.375rem;
-                    font-size: 0.9rem;
-                }
-
-                .required::after {
-                    content: " *";
-                    color: var(--danger-color);
-                }
-
-                .form-control {
-                    display: block;
-                    width: 100%;
-                    padding: 0.5rem 0.75rem;
-                    font-size: 0.9rem;
-                    font-weight: 400;
-                    line-height: 1.5;
-                    color: var(--gray-700);
-                    background-color: white;
-                    background-clip: padding-box;
-                    border: 1px solid var(--gray-300);
-                    border-radius: var(--border-radius);
-                    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
-                }
-
-                .form-control:focus {
-                    color: var(--gray-700);
-                    background-color: white;
-                    border-color: var(--primary-color);
-                    outline: 0;
-                    box-shadow: 0 0 0 0.2rem rgba(67, 97, 238, 0.25);
-                }
-
-                .form-control:read-only {
-                    background-color: var(--gray-100);
-                    opacity: 1;
-                }
-
-                .form-control:read-only:focus {
-                    border-color: var(--gray-300);
-                    box-shadow: none;
-                }
-
-                textarea.form-control {
-                    min-height: 6rem;
-                }
-
-                /* Invalid Feedback */
-                .invalid-feedback {
-                    display: none;
-                    width: 100%;
-                    margin-top: 0.25rem;
-                    font-size: 0.875em;
-                    color: var(--danger-color);
-                }
-
-                .is-invalid .form-control {
-                    border-color: var(--danger-color);
-                }
-
-                .is-invalid .form-control:focus {
-                    border-color: var(--danger-color);
-                    box-shadow: 0 0 0 0.2rem rgba(230, 57, 70, 0.25);
-                }
-
-                /* Upload Section */
-                .upload-section {
-                    text-align: center;
-                }
-
-                .upload-label {
-                    display: block;
-                    cursor: pointer;
-                }
-
-                .upload-container {
-                    border: 2px dashed var(--gray-400);
-                    border-radius: var(--border-radius);
-                    padding: 2rem;
-                    transition: all 0.2s ease;
-                    background-color: var(--gray-50);
-                }
-
-                .upload-container:hover {
-                    border-color: var(--primary-color);
-                    background-color: #f0f7ff;
-                }
-
-                .upload-content {
-                    display: flex;
-                    flex-direction: column;
-                    align-items: center;
-                    gap: 0.5rem;
-                }
-
-                .upload-icon {
-                    font-size: 2rem;
-                    color: var(--gray-400);
-                }
-
-                .upload-text {
-                    font-weight: 600;
-                    color: var(--gray-700);
-                    margin: 0;
-                }
-
-                .upload-hint {
-                    font-size: 0.8rem;
-                    color: var(--gray-500);
-                    margin: 0;
-                }
-
-                .upload-input {
-                    display: none;
-                }
-
-                /* Logo Preview */
-                .logo-preview-section {
-                    text-align: center;
-                }
-
-                .preview-title {
-                    font-weight: 600;
-                    color: var(--gray-700);
-                    margin-bottom: 1rem;
-                    font-size: 0.9rem;
-                }
-
-                .logo-preview-container {
-                    border: 1px solid var(--gray-200);
-                    border-radius: var(--border-radius);
-                    padding: 1rem;
-                    background-color: white;
-                }
-
-                .logo-preview {
-                    width: auto;
-                    max-width: 100%;
-                }
-
-                /* Action Buttons */
-                .action-buttons {
-                    display: flex;
-                    justify-content: flex-end;
-                    gap: 0.75rem;
-                    flex-wrap: wrap;
-                }
-
-                .btn {
-                    display: inline-flex;
-                    align-items: center;
-                    justify-content: center;
-                    padding: 0.5rem 1.25rem;
-                    font-size: 0.9rem;
-                    font-weight: 500;
-                    line-height: 1.5;
-                    text-align: center;
-                    text-decoration: none;
-                    vertical-align: middle;
-                    border: 1px solid transparent;
-                    border-radius: var(--border-radius);
-                    transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
-                }
-
-                .btn-primary {
-                    color: #fff;
-                    background-color: var(--primary-color);
-                    border-color: var(--primary-color);
-                }
-
-                .btn-primary:hover {
-                    color: #fff;
-                    background-color: var(--secondary-color);
-                    border-color: var(--secondary-color);
-                }
-
-                .btn-secondary {
-                    color: #fff;
-                    background-color: var(--gray-600);
-                    border-color: var(--gray-600);
-                }
-
-                .btn-secondary:hover {
-                    color: #fff;
-                    background-color: var(--gray-700);
-                    border-color: var(--gray-700);
-                }
-            </style>
+                                        @if ($user->id != 1 && !$user->hasAnyRole(['Super Admin']))
+                                            @can('UserManagement-Delete')
+                                                @if ($user->deleted_at != null)
+                                                    <form method="POST" action="{{ route('users.resoter', $user->id) }}">
+                                                        @csrf @method('DELETE')
+                                                        <button type="button"
+                                                            class="w-full flex items-center gap-3 px-4 py-2.5 text-xs font-bold text-green-600 hover:bg-green-50 activate-button">
+                                                            <i class="fa-solid fa-rotate-right"></i> Activate Account
+                                                        </button>
+                                                    </form>
+                                                @else
+                                                    <form method="POST" action="{{ route('users.destroy', $user->id) }}">
+                                                        @csrf @method('DELETE')
+                                                        <button type="button"
+                                                            class="w-full flex items-center gap-3 px-4 py-2.5 text-xs font-bold text-red-600 hover:bg-red-50 inactive-button">
+                                                            <i class="fa-solid fa-power-off"></i> Inactive Account
+                                                        </button>
+                                                    </form>
+                                                @endif
+                                            @endcan
+                                        @endif
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
         </div>
-    </main>
+    </div>
+
 @endsection
+
+@push('styles')
+    <style>
+        /* DataTables Custom Styles for Zawj Theme */
+        #User_Management_table_wrapper .dataTables_length select {
+            @apply border-slate-200 rounded-xl text-xs font-bold px-4 py-2 focus:ring-pink-500 focus:border-pink-500 outline-none transition;
+        }
+
+        #User_Management_table_wrapper .dataTables_filter input {
+            @apply border-slate-200 rounded-xl text-xs font-medium px-4 py-2 focus:ring-pink-500 focus:border-pink-500 outline-none transition w-64;
+        }
+
+        .dt-buttons .dt-button {
+            @apply bg-slate-100 text-slate-600 border-none rounded-xl text-[10px] font-black uppercase tracking-widest px-4 py-2 hover:bg-pink-600 hover:text-white transition duration-300 mb-4;
+        }
+    </style>
+@endpush
