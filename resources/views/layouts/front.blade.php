@@ -25,7 +25,7 @@
                 </div>
                 <div class="flex items-center space-x-4">
                     <span class="text-sm text-gray-500 hidden md:block">Assalamu Alaikum,
-                        <strong>{{ Auth::user()->full_name }}</strong></span>
+                        <strong>{{ Auth::user()->name }}</strong></span>
                     <form method="POST" action="{{ route('logout') }}">
                         @csrf
                         <button type="submit"

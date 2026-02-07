@@ -15,9 +15,9 @@ class DashboardController extends Controller
 
         $genderToFind = ($user->gender == 'male') ? 'female' : 'male';
 
-        $suggestedMatches = User::role('user')
-            ->where('gender', $genderToFind)
-            ->where('is_verified', true)
+        $suggestedMatches = User::where('id', '!=', $user->id)
+            // ->where('gender', $genderToFind)
+            // ->where('is_verified', true)
             ->limit(5)
             ->get();
 
