@@ -1,507 +1,122 @@
 @extends('layouts.main')
-@section('title', 'Dashboard - Poor Graduate')
+@section('title', 'Dashboard - Zawj Admin')
+
 @section('content')
-    <main id="main" class="main">
-        <!-- Main Form -->
-        <div class="container-fluid">
-            <!-- Page Header -->
-            <div class="card card-primary mb-4">
-                <div class="card-body">
-                    <div class="d-flex justify-content-between align-items-center">
+    <div class="p-6">
+        <div class="mb-8">
+            <h1 class="text-2xl font-bold text-gray-800">Admin Dashboard Overview</h1>
+            <p class="text-sm text-gray-500 mt-1">Manage and monitor your community growth from here.</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
+
+            <div
+                class="bg-white rounded-3xl p-6 shadow-sm border border-gray-100 relative overflow-hidden group hover:shadow-lg transition-all duration-300">
+                <div class="relative z-10 flex justify-between items-start">
+                    <div>
+                        <p class="text-gray-400 text-xs font-bold uppercase tracking-wider">Total Members</p>
+                        <h3 class="text-3xl font-extrabold text-gray-900 mt-1">2,450</h3>
+                        <p class="text-green-500 text-[10px] font-bold mt-2 flex items-center">
+                            <i class="bi bi-arrow-up-short text-lg"></i> +12% from last month
+                        </p>
+                    </div>
+                    <div class="bg-pink-100 text-pink-600 p-3 rounded-2xl shadow-inner shadow-pink-200">
+                        <i class="bi bi-people-fill text-xl"></i>
+                    </div>
+                </div>
+                <div
+                    class="absolute -right-4 -bottom-4 bg-pink-50 h-24 w-24 rounded-full group-hover:scale-150 transition-transform duration-700">
+                </div>
+            </div>
+
+            <div
+                class="bg-white rounded-3xl p-6 shadow-sm border border-gray-100 relative overflow-hidden group hover:shadow-lg transition-all duration-300">
+                <div class="relative z-10 flex justify-between items-start">
+                    <div>
+                        <p class="text-gray-400 text-xs font-bold uppercase tracking-wider">Verified Profiles</p>
+                        <h3 class="text-3xl font-extrabold text-gray-900 mt-1">1,890</h3>
+                        <p class="text-blue-500 text-[10px] font-bold mt-2 italic flex items-center">
+                            <i class="bi bi-patch-check-fill mr-1"></i> 77% Accuracy
+                        </p>
+                    </div>
+                    <div class="bg-blue-100 text-blue-600 p-3 rounded-2xl shadow-inner shadow-blue-200">
+                        <i class="bi bi-shield-check text-xl"></i>
+                    </div>
+                </div>
+                <div
+                    class="absolute -right-4 -bottom-4 bg-blue-50 h-24 w-24 rounded-full group-hover:scale-150 transition-transform duration-700">
+                </div>
+            </div>
+
+            <div
+                class="bg-white rounded-3xl p-6 shadow-sm border border-gray-100 relative overflow-hidden group hover:shadow-lg transition-all duration-300">
+                <div class="relative z-10 flex justify-between items-start">
+                    <div>
+                        <p class="text-gray-400 text-xs font-bold uppercase tracking-wider">Pending KYC</p>
+                        <h3 class="text-3xl font-extrabold text-gray-900 mt-1">12</h3>
+                        <p class="text-orange-500 text-[10px] font-bold mt-2 flex items-center">
+                            <i class="bi bi-exclamation-triangle-fill mr-1"></i> Needs Attention
+                        </p>
+                    </div>
+                    <div class="bg-orange-100 text-orange-600 p-3 rounded-2xl shadow-inner shadow-orange-200">
+                        <i class="bi bi-hourglass-split text-xl"></i>
+                    </div>
+                </div>
+                <div
+                    class="absolute -right-4 -bottom-4 bg-orange-50 h-24 w-24 rounded-full group-hover:scale-150 transition-transform duration-700">
+                </div>
+            </div>
+
+            <div
+                class="bg-white rounded-3xl p-6 shadow-sm border border-gray-100 relative overflow-hidden group hover:shadow-lg transition-all duration-300">
+                <div class="relative z-10 flex justify-between items-start">
+                    <div>
+                        <p class="text-gray-400 text-xs font-bold uppercase tracking-wider">Shadi Matches</p>
+                        <h3 class="text-3xl font-extrabold text-gray-900 mt-1">420</h3>
+                        <p class="text-purple-500 text-[10px] font-bold mt-2 flex items-center font-bold">
+                            <i class="bi bi-heart-fill mr-1"></i> Zawj Success Stories
+                        </p>
+                    </div>
+                    <div class="bg-purple-100 text-purple-600 p-3 rounded-2xl shadow-inner shadow-purple-200">
+                        <i class="bi bi-balloon-heart-fill text-xl"></i>
+                    </div>
+                </div>
+                <div
+                    class="absolute -right-4 -bottom-4 bg-purple-50 h-24 w-24 rounded-full group-hover:scale-150 transition-transform duration-700">
+                </div>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <div class="lg:col-span-2 bg-white rounded-3xl border border-gray-100 shadow-sm p-6">
+                <div class="flex justify-between items-center mb-6">
+                    <h4 class="font-bold text-gray-800 tracking-tight text-lg">New Registrations Flow</h4>
+                    <select class="text-xs border-gray-200 rounded-lg bg-gray-50 focus:ring-pink-500">
+                        <option>Last 7 Days</option>
+                        <option>Last 30 Days</option>
+                    </select>
+                </div>
+                <div
+                    class="h-64 flex items-center justify-center bg-gray-50 rounded-2xl border-2 border-dashed border-gray-200 text-gray-400 italic">
+                    Analytics Chart will be loaded here...
+                </div>
+            </div>
+
+            <div class="lg:col-span-1 bg-white rounded-3xl border border-gray-100 shadow-sm p-6">
+                <h4 class="font-bold text-gray-800 tracking-tight text-lg mb-4">Urgent Actions</h4>
+                <div class="space-y-4">
+                    <div
+                        class="flex items-center gap-4 p-3 hover:bg-pink-50 rounded-2xl transition group cursor-pointer border border-transparent hover:border-pink-100">
+                        <div
+                            class="bg-pink-600 text-white h-10 w-10 flex items-center justify-center rounded-xl font-bold shadow-lg shadow-pink-200">
+                            12</div>
                         <div>
-                            <h1 class="page-title mb-0">Poor Graduate Dashboard</h1>
-                            <nav aria-label="breadcrumb">
-                                <ol class="breadcrumb mb-0">
-                                    <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Home</a></li>
-                                    <li class="breadcrumb-item active" aria-current="page">Dashboard</li>
-                                </ol>
-                            </nav>
+                            <p class="text-xs font-bold text-gray-800">Review KYC Requests</p>
+                            <p class="text-[10px] text-gray-500">Ahmed, Fatima and 10 others...</p>
                         </div>
                     </div>
                 </div>
             </div>
-
-            @if ($message = Session::get('success'))
-                <div class="tt active">
-                    <div class="tt-content">
-                        <i class="fas fa-solid fa-check check"></i>
-                        <div class="message">
-                            <span class="text text-1">Success</span>
-                            <span class="text text-2">{{ $message }}</span>
-                        </div>
-                    </div>
-                    <i class="fa-solid fa-xmark close"></i>
-                    <div class="pg active"></div>
-                </div>
-            @endif
-
-            <section class="section dashboard">
-                <div class="row">
-                    <!-- Left side columns -->
-                    <div class="col-lg-12">
-                        <div class="row">
-                            <!-- Total Orders -->
-                            <div class="col-xxl-3 col-md-6 mb-4">
-                                <a href="#">
-                                    <div class="card card-primary">
-                                        <div class="card-body">
-                                            <h5 class="card-title">Total Orders</h5>
-                                            <div class="d-flex align-items-center">
-                                                <div class="card-icon rounded-circle d-flex align-items-center justify-content-center"
-                                                    style="width: 60px; height: 60px; background-color: #f0f4ff; flex-shrink: 0;">
-                                                    <i class="bi bi-cart-fill"
-                                                        style="font-size: 1.8rem; color: #4f46e5; line-height: 1;"></i>
-                                                </div>
-
-                                                <div class="ps-3 d-flex flex-column justify-content-center">
-                                                    <h6
-                                                        style="font-size: 1.5rem; font-weight: 700; margin: 0; line-height: 1.2; color: #1e293b;">
-                                                        500
-                                                    </h6>
-                                                    {{-- <span class="text-success small fw-bold" style="line-height: 1;">
-                                                        +5% <span class="text-muted fw-normal">last month</span>
-                                                    </span> --}}
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </a>
-                            </div>
-
-                            <!-- Available Products -->
-                            <div class="col-xxl-3 col-md-6 mb-4">
-                                <a href="#">
-                                    <div class="card card-secondary">
-                                        <div class="card-body">
-                                            <h5 class="card-title">Available Products</h5>
-                                            <div class="d-flex align-items-center">
-                                                <div class="card-icon rounded-circle d-flex align-items-center justify-content-center"
-                                                    style="width: 60px; height: 60px; background-color: #f0f4ff; flex-shrink: 0;">
-                                                    <i class="bi bi-box-seam"
-                                                        style="font-size: 1.8rem; color: #4f46e5; line-height: 1;"></i>
-                                                </div>
-
-                                                <div class="ps-3 d-flex flex-column justify-content-center">
-                                                    <h6
-                                                        style="font-size: 1.5rem; font-weight: 700; margin: 0; line-height: 1; color: #1e293b;">
-                                                        1200
-                                                    </h6>
-                                                    {{-- <span class="text-muted small"
-                                                        style="margin-top: 4px; line-height: 1;">Out of 50</span> --}}
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </a>
-                            </div>
-
-                            <!-- Total Users -->
-                            <div class="col-xxl-3 col-md-6 mb-4">
-                                <a href="{{ route('users.index') }}">
-                                    <div class="card card-secondary">
-                                        <div class="card-body">
-                                            <h5 class="card-title">Total Users</h5>
-                                            <div class="d-flex align-items-center">
-                                                <div class="card-icon rounded-circle d-flex align-items-center justify-content-center"
-                                                    style="width: 60px; height: 60px; background-color: #f0f4ff; flex-shrink: 0;">
-                                                    <i class="bi bi-people-fill"
-                                                        style="font-size: 1.8rem; color: #4f46e5; line-height: 1;"></i>
-                                                </div>
-
-                                                <div class="ps-3 d-flex flex-column justify-content-center">
-                                                    <h6
-                                                        style="font-size: 1.5rem; font-weight: 700; margin: 0; line-height: 1; color: #1e293b;">
-                                                        {{ $Totalusers ?? 0 }}
-                                                    </h6>
-                                                    {{-- <span class="text-muted small"
-                                                        style="margin-top: 4px; line-height: 1;">Out of 50</span> --}}
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </a>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <!-- Quick Actions -->
-                            <div class="col-12">
-                                <div class="card card-tertiary">
-                                    <div class="card-body">
-                                        <h5 class="card-title">
-                                            <i class="fas fa-bolt me-2"></i>
-                                            Quick Actions
-                                        </h5>
-                                        <div class="d-flex flex-wrap gap-3">
-                                            <a href="#" class="btn btn-primary">Add New Product</a>
-                                            <a href="#" class="btn btn-primary">View Orders</a>
-                                            <a href="#" class="btn btn-primary">View Reports</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
         </div>
-        </section>
-        </div>
-
-        <style>
-            /* Design System Variables */
-            :root {
-                --primary-color: #4361ee;
-                --secondary-color: #3f37c9;
-                --success-color: #4cc9f0;
-                --info-color: #4895ef;
-                --warning-color: #f72585;
-                --danger-color: #e63946;
-                --light-color: #f8f9fa;
-                --dark-color: #212529;
-                --gray-100: #f8f9fa;
-                --gray-200: #e9ecef;
-                --gray-300: #dee2e6;
-                --gray-400: #ced4da;
-                --gray-500: #adb5bd;
-                --gray-600: #6c757d;
-                --gray-700: #495057;
-                --gray-800: #343a40;
-                --gray-900: #212529;
-
-                --border-radius: 8px;
-                --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-                --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-                --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-
-                --card-padding: 1.5rem;
-                --card-border: 1px solid var(--gray-200);
-            }
-
-            /* Card Header Section */
-            .card-header-section {
-                border-left: 4px solid var(--info-color);
-            }
-
-            .page-title {
-                font-size: 1.5rem;
-                font-weight: 600;
-                color: var(--gray-800);
-                margin-bottom: 0.25rem;
-            }
-
-            .breadcrumb {
-                background-color: transparent;
-                padding: 0;
-                margin: 0;
-                font-size: 0.9rem;
-            }
-
-            .breadcrumb-item {
-                display: flex;
-                align-items: center;
-            }
-
-            .breadcrumb-item a {
-                color: var(--primary-color);
-                text-decoration: none;
-                transition: color 0.15s ease;
-            }
-
-            .breadcrumb-item a:hover {
-                color: var(--secondary-color);
-            }
-
-            .breadcrumb-item+.breadcrumb-item::before {
-                content: ">";
-                color: var(--gray-400);
-                padding: 0 0.5rem;
-            }
-
-            .breadcrumb-item.active {
-                color: var(--gray-700);
-                font-weight: 500;
-            }
-
-            /* Alert Styles */
-            .alert {
-                border: none;
-                border-radius: var(--border-radius);
-                padding: 0.75rem 1rem;
-                margin-bottom: 1rem;
-            }
-
-            .alert-body {
-                display: flex;
-                align-items: center;
-                gap: 0.5rem;
-            }
-
-            .alert-success {
-                background-color: #d1e7dd;
-                color: #0f5132;
-            }
-
-            .alert-danger {
-                background-color: #f8d7da;
-                color: #842029;
-            }
-
-            .btn-close {
-                background: none;
-                border: none;
-                opacity: 0.5;
-            }
-
-            .btn-close:hover {
-                opacity: 1;
-            }
-
-            /* Card Styles */
-            .card {
-                border: var(--card-border);
-                border-radius: var(--border-radius);
-                box-shadow: var(--shadow);
-                margin-bottom: 1.5rem;
-                transition: box-shadow 0.15s ease;
-            }
-
-            .card:hover {
-                box-shadow: var(--shadow-lg);
-            }
-
-            .card-primary {
-                border-left: 4px solid var(--primary-color);
-            }
-
-            .card-secondary {
-                border-left: 4px solid var(--success-color);
-            }
-
-            .card-tertiary {
-                border-left: 4px solid var(--warning-color);
-            }
-
-            .card-action {
-                border-left: 4px solid var(--success-color);
-            }
-
-            .card-header {
-                background-color: white;
-                border-bottom: 1px solid var(--gray-200);
-                padding: 1rem var(--card-padding);
-                border-top-left-radius: var(--border-radius);
-                border-top-right-radius: var(--border-radius);
-            }
-
-            .card-title {
-                font-size: 1.1rem;
-                font-weight: 600;
-                color: var(--gray-800);
-                margin: 0;
-                display: flex;
-                align-items: center;
-                gap: 0.5rem;
-            }
-
-            .card-body {
-                padding: var(--card-padding);
-            }
-
-            /* Form Styles */
-            .form-group {
-                margin-bottom: 1rem;
-            }
-
-            .form-label {
-                display: block;
-                font-weight: 500;
-                color: var(--gray-700);
-                margin-bottom: 0.375rem;
-                font-size: 0.9rem;
-            }
-
-            .required::after {
-                content: " *";
-                color: var(--danger-color);
-            }
-
-            .form-control {
-                display: block;
-                width: 100%;
-                padding: 0.5rem 0.75rem;
-                font-size: 0.9rem;
-                font-weight: 400;
-                line-height: 1.5;
-                color: var(--gray-700);
-                background-color: white;
-                background-clip: padding-box;
-                border: 1px solid var(--gray-300);
-                border-radius: var(--border-radius);
-                transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
-            }
-
-            .form-control:focus {
-                color: var(--gray-700);
-                background-color: white;
-                border-color: var(--primary-color);
-                outline: 0;
-                box-shadow: 0 0 0 0.2rem rgba(67, 97, 238, 0.25);
-            }
-
-            .form-control:read-only {
-                background-color: var(--gray-100);
-                opacity: 1;
-            }
-
-            .form-control:read-only:focus {
-                border-color: var(--gray-300);
-                box-shadow: none;
-            }
-
-            textarea.form-control {
-                min-height: 6rem;
-            }
-
-            /* Invalid Feedback */
-            .invalid-feedback {
-                display: none;
-                width: 100%;
-                margin-top: 0.25rem;
-                font-size: 0.875em;
-                color: var(--danger-color);
-            }
-
-            .is-invalid .form-control {
-                border-color: var(--danger-color);
-            }
-
-            .is-invalid .form-control:focus {
-                border-color: var(--danger-color);
-                box-shadow: 0 0 0 0.2rem rgba(230, 57, 70, 0.25);
-            }
-
-            /* Upload Section */
-            .upload-section {
-                text-align: center;
-            }
-
-            .upload-label {
-                display: block;
-                cursor: pointer;
-            }
-
-            .upload-container {
-                border: 2px dashed var(--gray-400);
-                border-radius: var(--border-radius);
-                padding: 2rem;
-                transition: all 0.2s ease;
-                background-color: var(--gray-50);
-            }
-
-            .upload-container:hover {
-                border-color: var(--primary-color);
-                background-color: #f0f7ff;
-            }
-
-            .upload-content {
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                gap: 0.5rem;
-            }
-
-            .upload-icon {
-                font-size: 2rem;
-                color: var(--gray-400);
-            }
-
-            .upload-text {
-                font-weight: 600;
-                color: var(--gray-700);
-                margin: 0;
-            }
-
-            .upload-hint {
-                font-size: 0.8rem;
-                color: var(--gray-500);
-                margin: 0;
-            }
-
-            .upload-input {
-                display: none;
-            }
-
-            /* Logo Preview */
-            .logo-preview-section {
-                text-align: center;
-            }
-
-            .preview-title {
-                font-weight: 600;
-                color: var(--gray-700);
-                margin-bottom: 1rem;
-                font-size: 0.9rem;
-            }
-
-            .logo-preview-container {
-                border: 1px solid var(--gray-200);
-                border-radius: var(--border-radius);
-                padding: 1rem;
-                background-color: white;
-            }
-
-            .logo-preview {
-                width: auto;
-                max-width: 100%;
-            }
-
-            /* Action Buttons */
-            .action-buttons {
-                display: flex;
-                justify-content: flex-end;
-                gap: 0.75rem;
-                flex-wrap: wrap;
-            }
-
-            .btn {
-                display: inline-flex;
-                align-items: center;
-                justify-content: center;
-                padding: 0.5rem 1.25rem;
-                font-size: 0.9rem;
-                font-weight: 500;
-                line-height: 1.5;
-                text-align: center;
-                text-decoration: none;
-                vertical-align: middle;
-                border: 1px solid transparent;
-                border-radius: var(--border-radius);
-                transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
-            }
-
-            .btn-primary {
-                color: #fff;
-                background-color: var(--primary-color);
-                border-color: var(--primary-color);
-            }
-
-            .btn-primary:hover {
-                color: #fff;
-                background-color: var(--secondary-color);
-                border-color: var(--secondary-color);
-            }
-
-            .btn-secondary {
-                color: #fff;
-                background-color: var(--gray-600);
-                border-color: var(--gray-600);
-            }
-
-            .btn-secondary:hover {
-                color: #fff;
-                background-color: var(--gray-700);
-                border-color: var(--gray-700);
-            }
-        </style>
-    </main>
+    </div>
 @endsection
