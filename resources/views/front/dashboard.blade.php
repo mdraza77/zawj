@@ -37,12 +37,16 @@
                 <a href="#"
                     class="block px-6 py-4 text-sm font-medium text-gray-700 hover:bg-pink-50 hover:text-pink-600 border-b border-gray-50 transition">My
                     Preferences</a>
-                <a href="#"
+                {{-- <a href="#"
                     class="block px-6 py-4 text-sm font-medium text-gray-700 hover:bg-pink-50 hover:text-pink-600 border-b border-gray-50 transition">Received
-                    Interests</a>
-                <a href="#"
+                    Interests</a> --}}
+                <a href="{{ route('interest.received') }}"
+                    class="block px-6 py-4 text-sm font-medium {{ request()->routeIs('interest.received') ? 'bg-pink-50 text-pink-600' : 'text-gray-700' }} hover:bg-pink-50 hover:text-pink-600 border-b border-gray-50 transition">
+                    Received Interests
+                </a>
+                {{-- <a href="#"
                     class="block px-6 py-4 text-sm font-medium text-gray-700 hover:bg-pink-50 hover:text-pink-600 transition">Shortlisted
-                    Profiles</a>
+                    Profiles</a> --}}
             </nav>
         </aside>
 

@@ -35,13 +35,14 @@ class InterestController extends Controller
     public function received()
     {
         $user = Auth::user();
-        // Jo log interest bheje hain unka data
+
+        // Fetching interests where current user is the receiver
         $requests = Interest::where('receiver_id', $user->id)
-            ->with('sender') // Sender ki profile ke liye
+            ->with('sender') // Eloquent relationship to get sender details
             ->latest()
             ->get();
 
-        return view('front.interests.received', compact('requests', 'user'));
+        return view('front.user.received_interests', compact('requests', 'user'));
     }
 
     // Status Update (Accept/Decline)
