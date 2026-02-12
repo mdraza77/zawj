@@ -104,18 +104,23 @@
             $.ajax({
                 url: "{{ route('interest.send') }}",
                 method: "POST",
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') // Ye zaroori hai
+                },
                 data: {
-                    _token: "{{ csrf_token() }}",
                     receiver_id: receiverId
                 },
                 success: function(response) {
                     btn.innerHTML = 'Interest Sent';
-                    btn.classList.replace('bg-pink-600', 'bg-gray-400');
-                    Swal.fire('Success', response.success, 'success');
+                    btn.classList.remove('bg-pink-600', 'hover:bg-pink-700');
+                    btn.classList.add('bg-gray-400', 'cursor-not-allowed');
+                    Swal.fire('Alhamdulillah', response.success, 'success');
                 },
-                error: function() {
+                error: function(xhr) {
                     btn.innerHTML = 'Send Interest';
                     btn.disabled = false;
+                    let errorMsg = xhr.responseJSON ? xhr.responseJSON.error : 'Something went wrong';
+                    Swal.fire('Oops!', errorMsg, 'error');
                 }
             });
         }
