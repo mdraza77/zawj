@@ -43,4 +43,9 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    public function interestsSent()
+    {
+        return $this->hasMany(Interest::class, 'sender_id');
+    }
 }
