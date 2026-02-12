@@ -98,7 +98,7 @@
                 </li>
 
                 <li>
-                    <a href="#"
+                    <a href="{{ route('users.index') }}"
                         class="flex items-center p-3 text-slate-500 rounded-2xl hover:bg-slate-50 hover:text-pink-600 transition">
                         <i class="bi bi-people text-lg"></i>
                         <span class="ml-3 font-semibold">User Directory</span>
@@ -117,8 +117,8 @@
                         <i class="bi bi-chevron-down text-[10px] transition" :class="open ? 'rotate-180' : ''"></i>
                     </button>
                     <ul x-show="open" x-cloak class="mt-1 ml-9 space-y-1 border-l-2 border-slate-100 pl-4">
-                        <li><a href="{{ route('users.index') }}"
-                                class="text-xs py-2 block hover:text-pink-600 transition">Managers</a></li>
+                        {{-- <li><a href="{{ route('users.index') }}"
+                                class="text-xs py-2 block hover:text-pink-600 transition">Managers</a></li> --}}
                         <li><a href="{{ route('roles.index') }}"
                                 class="text-xs py-2 block hover:text-pink-600 transition">Permissions</a></li>
                     </ul>

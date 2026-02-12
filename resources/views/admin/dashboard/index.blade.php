@@ -15,7 +15,7 @@
                 <div class="relative z-10 flex justify-between items-start">
                     <div>
                         <p class="text-gray-400 text-xs font-bold uppercase tracking-wider">Total Members</p>
-                        <h3 class="text-3xl font-extrabold text-gray-900 mt-1">2,450</h3>
+                        <h3 class="text-3xl font-extrabold text-gray-900 mt-1">{{ $TotalUsers }}</h3>
                         <p class="text-green-500 text-[10px] font-bold mt-2 flex items-center">
                             <i class="bi bi-arrow-up-short text-lg"></i> +12% from last month
                         </p>
@@ -34,7 +34,7 @@
                 <div class="relative z-10 flex justify-between items-start">
                     <div>
                         <p class="text-gray-400 text-xs font-bold uppercase tracking-wider">Verified Profiles</p>
-                        <h3 class="text-3xl font-extrabold text-gray-900 mt-1">1,890</h3>
+                        <h3 class="text-3xl font-extrabold text-gray-900 mt-1">{{ $TotalVerfiedUsers }}</h3>
                         <p class="text-blue-500 text-[10px] font-bold mt-2 italic flex items-center">
                             <i class="bi bi-patch-check-fill mr-1"></i> 77% Accuracy
                         </p>
@@ -72,7 +72,7 @@
                 <div class="relative z-10 flex justify-between items-start">
                     <div>
                         <p class="text-gray-400 text-xs font-bold uppercase tracking-wider">Shadi Matches</p>
-                        <h3 class="text-3xl font-extrabold text-gray-900 mt-1">420</h3>
+                        <h3 class="text-3xl font-extrabold text-gray-900 mt-1">{{ $TotalMatches }}</h3>
                         <p class="text-purple-500 text-[10px] font-bold mt-2 flex items-center font-bold">
                             <i class="bi bi-heart-fill mr-1"></i> Zawj Success Stories
                         </p>
