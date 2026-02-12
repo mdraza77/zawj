@@ -30,14 +30,20 @@
                         {{ $profileUser->gender == 'male' ? 'Male' : 'Female' }}</p>
 
                     <div class="mt-8 space-y-3">
-                        <button
+                        {{-- <button
                             class="w-full py-4 bg-pink-600 text-white rounded-2xl font-black text-sm shadow-xl shadow-pink-100 hover:bg-pink-700 transition transform hover:-translate-y-1">
                             Send Interest
+                        </button> --}}
+
+                        <button onclick="sendInterest({{ $profileUser->id }})" id="interest-btn-{{ $profileUser->id }}"
+                            class="bg-pink-600 text-white px-5 py-2 rounded-xl text-xs font-bold hover:bg-pink-700 transition shadow-lg shadow-pink-100">
+                            Send Interest
                         </button>
-                        <button
+
+                        {{-- <button
                             class="w-full py-4 bg-slate-50 text-slate-600 rounded-2xl font-bold text-sm hover:bg-slate-100 transition">
                             Shortlist Profile
-                        </button>
+                        </button> --}}
                     </div>
                 </div>
             </div>
@@ -107,4 +113,36 @@
             </div>
         </div>
     </div>
+
+
+    <script>
+        function sendInterest(receiverId) {
+            const btn = document.getElementById(`interest-btn-${receiverId}`);
+            btn.innerHTML = 'Sending...';
+            btn.disabled = true;
+
+            $.ajax({
+                url: "{{ route('interest.send') }}",
+                method: "POST",
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') // Ye zaroori hai
+                },
+                data: {
+                    receiver_id: receiverId
+                },
+                success: function(response) {
+                    btn.innerHTML = 'Interest Sent';
+                    btn.classList.remove('bg-pink-600', 'hover:bg-pink-700');
+                    btn.classList.add('bg-gray-400', 'cursor-not-allowed');
+                    Swal.fire('Alhamdulillah', response.success, 'success');
+                },
+                error: function(xhr) {
+                    btn.innerHTML = 'Send Interest';
+                    btn.disabled = false;
+                    let errorMsg = xhr.responseJSON ? xhr.responseJSON.error : 'Something went wrong';
+                    Swal.fire('Oops!', errorMsg, 'error');
+                }
+            });
+        }
+    </script>
 @endsection
