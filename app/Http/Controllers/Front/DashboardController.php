@@ -19,11 +19,17 @@ class DashboardController extends Controller
         $suggestedMatches = User::where('id', '!=', $user->id)
             // ->where('gender', $genderToFind)
             // ->where('is_verified', true)
-            // Yahan hum Admin aur Super Admin ko exclude kar rahe hain
             ->withoutRole(['admin', 'Super Admin'])
-            ->limit(5)
+            // ->limit(5)
             ->get();
 
         return view('front.dashboard', compact('user', 'suggestedMatches'));
+    }
+
+    public function showProfile($id)
+    {
+        $profileUser = User::withoutRole(['admin', 'Super Admin'])->findOrFail($id);
+
+        return view('front.partner.show', compact('profileUser'));
     }
 }

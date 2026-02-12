@@ -9,4 +9,5 @@ Route::get('/', function () {
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard', [UserDashboard::class, 'index'])->name('dashboard');
+    Route::get('/profile/{id}', [UserDashboard::class, 'showProfile'])->name('profile.show');
 });

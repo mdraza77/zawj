@@ -70,7 +70,11 @@
                             </div>
                         </div>
                         <div class="px-6 py-4 bg-gray-50/50 border-t border-gray-50 flex justify-between items-center">
-                            <button class="text-gray-500 text-xs font-bold hover:text-pink-600">View Details</button>
+                            {{-- <button class="text-gray-500 text-xs font-bold hover:text-pink-600">View Details</button> --}}
+                            <a href="{{ route('profile.show', $match->id) }}"
+                                class="text-gray-500 text-xs font-bold hover:text-pink-600 transition">
+                                View Details
+                            </a>
                             <button
                                 class="bg-pink-600 text-white px-5 py-2 rounded-xl text-xs font-bold hover:bg-pink-700 transition shadow-lg shadow-pink-100">Send
                                 Interest</button>
