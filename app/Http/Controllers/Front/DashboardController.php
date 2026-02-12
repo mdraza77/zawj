@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
+use App\Models\Interest;
 
 class DashboardController extends Controller
 {
@@ -32,4 +33,19 @@ class DashboardController extends Controller
 
         return view('front.partner.show', compact('profileUser'));
     }
+
+    // public function sendInterest(Request $request)
+    // {
+    //     $user = Auth::user();
+
+    //     $interest = Interest::updateOrCreate(
+    //         [
+    //             'sender_id' => $user->id,
+    //             'receiver_id' => $request->receiver_id,
+    //         ],
+    //         ['status' => 'pending']
+    //     );
+
+    //     return response()->json(['success' => 'Interest sent successfully!']);
+    // }
 }

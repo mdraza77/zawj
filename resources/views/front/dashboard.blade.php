@@ -75,9 +75,14 @@
                                 class="text-gray-500 text-xs font-bold hover:text-pink-600 transition">
                                 View Details
                             </a>
-                            <button
+                            {{-- <button
                                 class="bg-pink-600 text-white px-5 py-2 rounded-xl text-xs font-bold hover:bg-pink-700 transition shadow-lg shadow-pink-100">Send
-                                Interest</button>
+                                Interest</button> --}}
+
+                            <button onclick="sendInterest({{ $match->id }})" id="interest-btn-{{ $match->id }}"
+                                class="bg-pink-600 text-white px-5 py-2 rounded-xl text-xs font-bold hover:bg-pink-700 transition shadow-lg shadow-pink-100">
+                                Send Interest
+                            </button>
                         </div>
                     </div>
                 @empty
@@ -89,4 +94,30 @@
         </section>
 
     </div>
+
+    <script>
+        function sendInterest(receiverId) {
+            const btn = document.getElementById(`interest-btn-${receiverId}`);
+            btn.innerHTML = 'Sending...';
+            btn.disabled = true;
+
+            $.ajax({
+                url: "{{ route('interest.send') }}",
+                method: "POST",
+                data: {
+                    _token: "{{ csrf_token() }}",
+                    receiver_id: receiverId
+                },
+                success: function(response) {
+                    btn.innerHTML = 'Interest Sent';
+                    btn.classList.replace('bg-pink-600', 'bg-gray-400');
+                    Swal.fire('Success', response.success, 'success');
+                },
+                error: function() {
+                    btn.innerHTML = 'Send Interest';
+                    btn.disabled = false;
+                }
+            });
+        }
+    </script>
 @endsection
