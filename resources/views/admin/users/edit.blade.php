@@ -89,12 +89,12 @@
 
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="mobile" class="form-label required">Mobile</label>
-                                        <input type="tel" name="mobile" class="form-control" id="mobile"
+                                        <label for="phone" class="form-label required">Mobile</label>
+                                        <input type="tel" name="phone" class="form-control" id="phone"
                                             placeholder="Enter Mobile Number"
                                             oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0,10);"
-                                            value="{{ $user->mobile }}" required>
-                                        @error('mobile')
+                                            value="{{ $user->phone }}" required>
+                                        @error('phone')
                                             <div class="invalid-feedback">{{ $message }}</div>
                                         @enderror
                                     </div>

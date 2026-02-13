@@ -11,6 +11,10 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 
+    <!-- Favicons -->
+    <link href="{{ asset('img/zawj.jpg') }}" rel="icon">
+    <link href="{{ asset('img/zawj.jpg') }}" rel="apple-touch-icon">
+
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <style>
         body {
