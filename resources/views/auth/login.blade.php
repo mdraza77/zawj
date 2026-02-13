@@ -76,7 +76,7 @@
                     <label class="text-[10px] font-bold text-slate-400 uppercase tracking-widest ml-1">Email
                         Address</label>
                     <div class="relative mt-1">
-                        <input type="email" name="email" value="{{ old('email', 'mdraza8397@gmail.com') }}" required
+                        <input type="email" name="email" value="{{ old('email', 'male1@example.com') }}" required
                             autofocus
                             class="w-full px-5 py-4 rounded-2xl bg-slate-50 border-transparent focus:border-pink-500 focus:bg-white focus:ring-0 transition text-sm font-semibold pr-12"
                             placeholder="name@example.com">

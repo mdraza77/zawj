@@ -33,7 +33,7 @@ return new class extends Migration
 
             // Personal/Family Details
             $table->decimal('salary', 15, 2)->nullable();
-            $table->integer('family_members')->default(0)->nullable();
+            $table->string('family_members')->default('Single Child')->nullable();
         });
     }
 

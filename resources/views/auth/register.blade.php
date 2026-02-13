@@ -235,9 +235,9 @@
                                 <label
                                     class="text-[10px] font-bold text-slate-400 uppercase tracking-widest ml-1">Family
                                     Members</label>
-                                <input type="number" name="family_members"
+                                <input type="text" name="family_members"
                                     class="w-full px-4 py-3.5 rounded-2xl bg-slate-50 border-2 border-transparent focus:border-pink-500 focus:bg-white focus:ring-0 transition-all text-sm font-semibold outline-none"
-                                    placeholder="0">
+                                    placeholder="2 Brothers, 1 Sister">
                             </div>
                             <div class="md:col-span-2 space-y-1.5">
                                 <label
