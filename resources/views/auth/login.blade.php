@@ -76,7 +76,8 @@
                     <label class="text-[10px] font-bold text-slate-400 uppercase tracking-widest ml-1">Email
                         Address</label>
                     <div class="relative mt-1">
-                        <input type="email" name="email" value="{{ old('email') }}" required autofocus
+                        <input type="email" name="email" value="{{ old('email', 'mdraza8397@gmail.com') }}" required
+                            autofocus
                             class="w-full px-5 py-4 rounded-2xl bg-slate-50 border-transparent focus:border-pink-500 focus:bg-white focus:ring-0 transition text-sm font-semibold pr-12"
                             placeholder="name@example.com">
                         <i class="bi bi-envelope absolute right-5 top-4 text-slate-300"></i>
@@ -97,7 +98,7 @@
                     <div class="relative mt-1">
                         <input type="password" name="password" required
                             class="w-full px-5 py-4 rounded-2xl bg-slate-50 border-transparent focus:border-pink-500 focus:bg-white focus:ring-0 transition text-sm font-semibold pr-12"
-                            placeholder="••••••••">
+                            placeholder="••••••••" value="Success2026$">
                         <i class="bi bi-key absolute right-5 top-4 text-slate-300"></i>
                     </div>
                     @if ($errors->has('password'))
