@@ -37,6 +37,14 @@ class RegisteredUserController extends Controller
             'phone' => ['required', 'string', 'max:10', 'unique:' . User::class],
             'gender' => ['required', 'string', 'in:male,female'],
             'date_of_birth' => ['required', 'date'],
+            'state' => ['nullable', 'string'],
+            'city' => ['nullable', 'string'],
+            'district' => ['nullable', 'string'],
+            'sect' => ['nullable', 'in:Sunni,Shia'],
+            'sub_sect' => ['nullable'],
+            'namaz_frequency' => ['nullable', 'string'],
+            'salary' => ['nullable', 'numeric'],
+            'family_members' => ['nullable', 'integer'],
         ]);
 
         $user = User::create([
@@ -46,6 +54,15 @@ class RegisteredUserController extends Controller
             'phone' => $request->phone,
             'date_of_birth' => $request->date_of_birth,
             'gender' => $request->gender,
+            'state' => $request->state ?? 'West Bengal',
+            'city' => $request->city,
+            'district' => $request->district,
+            'pincode' => $request->pincode,
+            'sect' => $request->sect,
+            'sub_sect' => $request->sub_sect,
+            'namaz_frequency' => $request->namaz_frequency,
+            'salary' => $request->salary,
+            'family_members' => $request->family_members,
         ]);
 
         event(new Registered($user));
