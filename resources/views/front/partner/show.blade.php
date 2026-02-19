@@ -15,8 +15,6 @@
             <div class="lg:col-span-1">
                 <div class="bg-white rounded-[2.5rem] shadow-sm border border-slate-100 p-8 text-center sticky top-24">
                     <div class="relative inline-block">
-                        {{-- <img class="h-40 w-40 rounded-[2.5rem] mx-auto object-cover ring-8 ring-pink-50 shadow-xl"
-                            src="https://ui-avatars.com/api/?name={{ urlencode($profileUser->name) }}&background=fdf2f8&color=db2777&size=200"> --}}
                         @php
                             $defaultAvatar =
                                 'https://ui-avatars.com/api/?name=' .
@@ -48,20 +46,13 @@
                         {{ $profileUser->gender == 'male' ? 'Male' : 'Female' }}</p>
 
                     <div class="mt-8 space-y-3">
-                        {{-- <button
-                            class="w-full py-4 bg-pink-600 text-white rounded-2xl font-black text-sm shadow-xl shadow-pink-100 hover:bg-pink-700 transition transform hover:-translate-y-1">
-                            Send Interest
-                        </button> --}}
 
-                        <button onclick="sendInterest({{ $profileUser->id }})" id="interest-btn-{{ $profileUser->id }}"
-                            class="bg-pink-600 text-white px-5 py-2 rounded-xl text-xs font-bold hover:bg-pink-700 transition shadow-lg shadow-pink-100">
-                            Send Interest
+                        <button id="interest-btn-{{ $profileUser->id }}" {{ $alreadySent ? 'disabled' : '' }}
+                            @if (!$alreadySent) onclick="sendInterest({{ $profileUser->id }})" @endif
+                            class="{{ $alreadySent ? 'bg-gray-400 cursor-not-allowed' : 'bg-pink-600 hover:bg-pink-700' }} text-white px-5 py-2 rounded-xl text-xs font-bold transition shadow-lg shadow-pink-100">
+
+                            {{ $alreadySent ? 'Interest Sent' : 'Send Interest' }}
                         </button>
-
-                        {{-- <button
-                            class="w-full py-4 bg-slate-50 text-slate-600 rounded-2xl font-bold text-sm hover:bg-slate-100 transition">
-                            Shortlist Profile
-                        </button> --}}
                     </div>
                 </div>
             </div>

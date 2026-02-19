@@ -37,12 +37,25 @@ class DashboardController extends Controller
     }
 
 
+    // public function showProfile($id)
+    // {
+    //     $profileUser = User::withoutRole(['admin', 'Super Admin'])
+    //         ->with('profile')
+    //         ->findOrFail($id);
+
+    //     return view('front.partner.show', compact('profileUser'));
+    // }
+
     public function showProfile($id)
     {
         $profileUser = User::withoutRole(['admin', 'Super Admin'])
             ->with('profile')
             ->findOrFail($id);
 
-        return view('front.partner.show', compact('profileUser'));
+        $alreadySent = Interest::where('sender_id', auth()->id())
+            ->where('receiver_id', $profileUser->id)
+            ->exists();
+
+        return view('front.partner.show', compact('profileUser', 'alreadySent'));
     }
 }
