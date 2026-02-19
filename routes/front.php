@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Front\DashboardController as UserDashboard;
 use App\Http\Controllers\Front\InterestController;
+use App\Http\Controllers\UserProfileController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -24,4 +25,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     // 4. Interest Accept ya Decline karne ke liye
     Route::post('/interest/update-status', [InterestController::class, 'updateStatus'])->name('interest.update');
+
+    Route::get('/my-profile', [UserProfileController::class, 'create'])->name('my-profile.create');
+    Route::post('/my-profile', [UserProfileController::class, 'store'])->name('my-profile.store');
 });

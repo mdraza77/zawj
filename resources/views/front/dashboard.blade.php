@@ -8,8 +8,19 @@
         <aside class="lg:col-span-1 space-y-6">
             <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 text-center">
                 <div class="relative inline-block">
-                    <img class="h-24 w-24 rounded-full mx-auto object-cover ring-4 ring-pink-50"
-                        src="https://ui-avatars.com/api/?name={{ urlencode($user->name) }}&color=7F9CF5&background=EBF4FF">
+                    @php
+                        $defaultAvatar =
+                            'https://ui-avatars.com/api/?name=' .
+                            urlencode(auth()->user()->name) .
+                            '&background=fdf2f8&color=db2777&size=200';
+                        $currentImage = isset($image->image_path)
+                            ? asset('storage/' . $image->image_path)
+                            : $defaultAvatar;
+                    @endphp
+                    <a href="{{ route('my-profile.create') }}">
+                        <img class="h-24 w-24 rounded-full mx-auto object-cover ring-4 ring-pink-50"
+                            src="{{ $currentImage }}">
+                    </a>
                     @if ($user->is_verified)
                         <div class="absolute bottom-0 right-0 bg-blue-500 text-white p-1 rounded-full border-2 border-white">
                             <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">

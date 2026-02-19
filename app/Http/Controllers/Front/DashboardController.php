@@ -7,12 +7,15 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use App\Models\Interest;
+use App\Models\UserProfile;
 
 class DashboardController extends Controller
 {
     public function index()
     {
         $user = Auth::user();
+        $image = UserProfile::where('user_id', Auth::id())->first();
+
 
         // Opposite gender logic
         $genderToFind = ($user->gender == 'male') ? 'female' : 'male';
@@ -24,7 +27,7 @@ class DashboardController extends Controller
             // ->limit(5)
             ->get();
 
-        return view('front.dashboard', compact('user', 'suggestedMatches'));
+        return view('front.dashboard', compact('user', 'suggestedMatches', 'image'));
     }
 
     public function showProfile($id)
