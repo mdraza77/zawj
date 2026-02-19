@@ -38,22 +38,6 @@ class InterestController extends Controller
         return response()->json(['success' => 'Interest sent successfully']);
     }
 
-
-    // Aayi hui requests (Received) dekhne ke liye
-    // public function received()
-    // {
-    //     $user = Auth::user();
-    //     $image = UserProfile::where('user_id', Auth::id())->first();
-
-    //     // Fetching interests where current user is the receiver
-    //     $requests = Interest::where('receiver_id', $user->id)
-    //         ->with('sender',) // Eloquent relationship to get sender details
-    //         ->latest()
-    //         ->get();
-
-    //     return view('front.user.received_interests', compact('requests', 'user', 'image'));
-    // }
-
     public function received()
     {
         $requests = auth()->user()
@@ -65,7 +49,6 @@ class InterestController extends Controller
         return view('front.user.received_interests', compact('requests'));
     }
 
-    // Status Update (Accept/Decline)
     public function updateStatus(Request $request)
     {
         $interest = Interest::where('receiver_id', Auth::id())

@@ -48,16 +48,10 @@
                 <a href="#"
                     class="block px-6 py-4 text-sm font-medium text-gray-700 hover:bg-pink-50 hover:text-pink-600 border-b border-gray-50 transition">My
                     Preferences</a>
-                {{-- <a href="#"
-                    class="block px-6 py-4 text-sm font-medium text-gray-700 hover:bg-pink-50 hover:text-pink-600 border-b border-gray-50 transition">Received
-                    Interests</a> --}}
                 <a href="{{ route('interest.received') }}"
                     class="block px-6 py-4 text-sm font-medium {{ request()->routeIs('interest.received') ? 'bg-pink-50 text-pink-600' : 'text-gray-700' }} hover:bg-pink-50 hover:text-pink-600 border-b border-gray-50 transition">
                     Received Interests
                 </a>
-                {{-- <a href="#"
-                    class="block px-6 py-4 text-sm font-medium text-gray-700 hover:bg-pink-50 hover:text-pink-600 transition">Shortlisted
-                    Profiles</a> --}}
             </nav>
         </aside>
 
@@ -79,7 +73,6 @@
                                         urlencode($match->name) .
                                         '&background=fdf2f8&color=db2777';
 
-                                    // Check if profile exists, has image, and is public
                                     $matchImage =
                                         $match->profile && $match->profile->image_path && $match->profile->is_public
                                             ? asset('storage/' . $match->profile->image_path)
@@ -97,19 +90,10 @@
                             </div>
                         </div>
                         <div class="px-6 py-4 bg-gray-50/50 border-t border-gray-50 flex justify-between items-center">
-                            {{-- <button class="text-gray-500 text-xs font-bold hover:text-pink-600">View Details</button> --}}
                             <a href="{{ route('profile.show', $match->id) }}"
                                 class="text-gray-500 text-xs font-bold hover:text-pink-600 transition">
                                 View Details
                             </a>
-                            {{-- <button
-                                class="bg-pink-600 text-white px-5 py-2 rounded-xl text-xs font-bold hover:bg-pink-700 transition shadow-lg shadow-pink-100">Send
-                                Interest</button> --}}
-
-                            {{-- <button onclick="sendInterest({{ $match->id }})" id="interest-btn-{{ $match->id }}"
-                                class="bg-pink-600 text-white px-5 py-2 rounded-xl text-xs font-bold hover:bg-pink-700 transition shadow-lg shadow-pink-100">
-                                Send Interest
-                            </button> --}}
 
                             @php
                                 $alreadySent = in_array($match->id, $sentInterests);
