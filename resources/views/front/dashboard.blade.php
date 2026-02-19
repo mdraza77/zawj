@@ -106,9 +106,20 @@
                                 class="bg-pink-600 text-white px-5 py-2 rounded-xl text-xs font-bold hover:bg-pink-700 transition shadow-lg shadow-pink-100">Send
                                 Interest</button> --}}
 
-                            <button onclick="sendInterest({{ $match->id }})" id="interest-btn-{{ $match->id }}"
+                            {{-- <button onclick="sendInterest({{ $match->id }})" id="interest-btn-{{ $match->id }}"
                                 class="bg-pink-600 text-white px-5 py-2 rounded-xl text-xs font-bold hover:bg-pink-700 transition shadow-lg shadow-pink-100">
                                 Send Interest
+                            </button> --}}
+
+                            @php
+                                $alreadySent = in_array($match->id, $sentInterests);
+                            @endphp
+
+                            <button id="interest-btn-{{ $match->id }}" {{ $alreadySent ? 'disabled' : '' }}
+                                @if (!$alreadySent) onclick="sendInterest({{ $match->id }})" @endif
+                                class="{{ $alreadySent ? 'bg-gray-400 cursor-not-allowed' : 'bg-pink-600 hover:bg-pink-700' }} text-white px-5 py-2 rounded-xl text-xs font-bold transition shadow-lg shadow-pink-100">
+
+                                {{ $alreadySent ? 'Interest Sent' : 'Send Interest' }}
                             </button>
                         </div>
                     </div>

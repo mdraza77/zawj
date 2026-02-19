@@ -13,24 +13,31 @@ class InterestController extends Controller
 {
     public function send(Request $request)
     {
-        // 1. Validation
         $request->validate([
             'receiver_id' => 'required|exists:users,id'
         ]);
 
-        // 2. Self-interest check
         if (auth()->id() == $request->receiver_id) {
-            return response()->json(['error' => 'Khudi ko interest nahi bhej sakte!'], 400);
+            return response()->json(['error' => 'Invalid action'], 400);
         }
 
-        // 3. Save to database
-        Interest::updateOrCreate(
-            ['sender_id' => auth()->id(), 'receiver_id' => $request->receiver_id],
-            ['status' => 'pending']
-        );
+        $exists = Interest::where('sender_id', auth()->id())
+            ->where('receiver_id', $request->receiver_id)
+            ->exists();
 
-        return response()->json(['success' => 'Interest sent successfully!']);
+        if ($exists) {
+            return response()->json(['error' => 'Interest already sent'], 422);
+        }
+
+        Interest::create([
+            'sender_id' => auth()->id(),
+            'receiver_id' => $request->receiver_id,
+            'status' => 'pending'
+        ]);
+
+        return response()->json(['success' => 'Interest sent successfully']);
     }
+
 
     // Aayi hui requests (Received) dekhne ke liye
     // public function received()

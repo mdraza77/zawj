@@ -16,29 +16,35 @@ class DashboardController extends Controller
         $user = Auth::user();
         $image = UserProfile::where('user_id', Auth::id())->first();
 
-
         // Opposite gender logic
         $genderToFind = ($user->gender == 'male') ? 'female' : 'male';
 
         $suggestedMatches = User::where('id', '!=', $user->id)
             ->where('gender', $genderToFind)
-            // ->where('is_verified', true)
             ->withoutRole(['admin', 'Super Admin'])
-            // ->limit(5)
-            // ->with('profile')
             ->get();
 
-        return view('front.dashboard', compact('user', 'suggestedMatches', 'image'));
+        $sentInterests = Interest::where('sender_id', $user->id)
+            ->pluck('receiver_id')
+            ->toArray();
+
+        return view('front.dashboard', compact(
+            'user',
+            'suggestedMatches',
+            'image',
+            'sentInterests'
+        ));
     }
 
-    public function showProfile($id)
-{
-    $profileUser = User::withoutRole(['admin', 'Super Admin'])
-        ->with('profile')
-        ->findOrFail($id);
 
-    return view('front.partner.show', compact('profileUser'));
-}
+    public function showProfile($id)
+    {
+        $profileUser = User::withoutRole(['admin', 'Super Admin'])
+            ->with('profile')
+            ->findOrFail($id);
+
+        return view('front.partner.show', compact('profileUser'));
+    }
 
 
     // public function sendInterest(Request $request)
