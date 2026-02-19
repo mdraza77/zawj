@@ -15,8 +15,26 @@
             <div class="lg:col-span-1">
                 <div class="bg-white rounded-[2.5rem] shadow-sm border border-slate-100 p-8 text-center sticky top-24">
                     <div class="relative inline-block">
-                        <img class="h-40 w-40 rounded-[2.5rem] mx-auto object-cover ring-8 ring-pink-50 shadow-xl"
-                            src="https://ui-avatars.com/api/?name={{ urlencode($profileUser->name) }}&background=fdf2f8&color=db2777&size=200">
+                        {{-- <img class="h-40 w-40 rounded-[2.5rem] mx-auto object-cover ring-8 ring-pink-50 shadow-xl"
+                            src="https://ui-avatars.com/api/?name={{ urlencode($profileUser->name) }}&background=fdf2f8&color=db2777&size=200"> --}}
+                        @php
+                            $defaultAvatar =
+                                'https://ui-avatars.com/api/?name=' .
+                                urlencode($profileUser->name) .
+                                '&background=fdf2f8&color=db2777';
+
+                            $matchImage =
+                                $profileUser->profile &&
+                                $profileUser->profile->image_path &&
+                                $profileUser->profile->is_public
+                                    ? asset('storage/' . $profileUser->profile->image_path)
+                                    : $defaultAvatar;
+                        @endphp
+
+                        <img src="{{ $matchImage }}"
+                            class="h-40 w-40 rounded-[2.5rem] mx-auto object-cover ring-8 ring-pink-50 shadow-xl"
+                            alt="{{ $profileUser->name }}">
+
                         @if ($profileUser->is_verified)
                             <div
                                 class="absolute -bottom-2 -right-2 bg-blue-500 text-white p-2 rounded-2xl border-4 border-white shadow-lg">

@@ -25,17 +25,21 @@ class DashboardController extends Controller
             // ->where('is_verified', true)
             ->withoutRole(['admin', 'Super Admin'])
             // ->limit(5)
+            ->with('profile')
             ->get();
 
         return view('front.dashboard', compact('user', 'suggestedMatches', 'image'));
     }
 
     public function showProfile($id)
-    {
-        $profileUser = User::withoutRole(['admin', 'Super Admin'])->findOrFail($id);
+{
+    $profileUser = User::withoutRole(['admin', 'Super Admin'])
+        ->with('profile')
+        ->findOrFail($id);
 
-        return view('front.partner.show', compact('profileUser'));
-    }
+    return view('front.partner.show', compact('profileUser'));
+}
+
 
     // public function sendInterest(Request $request)
     // {

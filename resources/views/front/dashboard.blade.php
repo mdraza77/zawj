@@ -73,8 +73,20 @@
                         class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden group hover:border-pink-200 transition">
                         <div class="p-6 flex items-center space-x-4">
                             <div class="h-16 w-16 rounded-xl bg-pink-50 flex-shrink-0 overflow-hidden">
-                                <img
-                                    src="https://ui-avatars.com/api/?name={{ urlencode($match->name) }}&background=fdf2f8&color=db2777">
+                                @php
+                                    $defaultAvatar =
+                                        'https://ui-avatars.com/api/?name=' .
+                                        urlencode($match->name) .
+                                        '&background=fdf2f8&color=db2777';
+
+                                    // Check if profile exists, has image, and is public
+                                    $matchImage =
+                                        $match->profile && $match->profile->image_path && $match->profile->is_public
+                                            ? asset('storage/' . $match->profile->image_path)
+                                            : $defaultAvatar;
+                                @endphp
+
+                                <img src="{{ $matchImage }}" class="h-full w-full object-cover" alt="{{ $match->name }}">
                             </div>
                             <div class="flex-1">
                                 <h4 class="font-bold text-gray-900 group-hover:text-pink-600 transition">{{ $match->name }}
