@@ -49,6 +49,11 @@ class User extends Authenticatable
         return $this->hasMany(Interest::class, 'sender_id');
     }
 
+    public function receivedInterests()
+    {
+        return $this->hasMany(Interest::class, 'receiver_id');
+    }
+
     public function profile()
     {
         return $this->hasOne(UserProfile::class, 'user_id');

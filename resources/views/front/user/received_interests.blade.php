@@ -23,8 +23,26 @@
 
                         <div class="flex items-center gap-4">
                             <div class="relative">
-                                <img class="h-16 w-16 rounded-2xl object-cover ring-4 ring-pink-50"
-                                    src="https://ui-avatars.com/api/?name={{ urlencode($request->sender->name) }}&background=fdf2f8&color=db2777">
+                                {{-- <img class="h-16 w-16 rounded-2xl object-cover ring-4 ring-pink-50"
+                                    src="https://ui-avatars.com/api/?name={{ urlencode($request->sender->name) }}&background=fdf2f8&color=db2777"> --}}
+
+                                @php
+                                    $sender = $request->sender;
+
+                                    $defaultAvatar =
+                                        'https://ui-avatars.com/api/?name=' .
+                                        urlencode($sender->name) .
+                                        '&background=fdf2f8&color=db2777';
+
+                                    $senderImage =
+                                        $sender->profile && $sender->profile->image_path && $sender->profile->is_public
+                                            ? asset('storage/' . $sender->profile->image_path)
+                                            : $defaultAvatar;
+                                @endphp
+
+                                <img src="{{ $senderImage }}"
+                                    class="h-16 w-16 rounded-2xl object-cover ring-4 ring-pink-50"
+                                    alt="{{ $sender->name }}">
                                 @if ($request->sender->is_verified)
                                     <div
                                         class="absolute -bottom-1 -right-1 bg-blue-500 text-white p-1 rounded-lg border-2 border-white shadow-sm">

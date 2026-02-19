@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Interest;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use App\Models\UserProfile;
 
 class InterestController extends Controller
 {
@@ -23,7 +24,7 @@ class InterestController extends Controller
         }
 
         // 3. Save to database
-        \App\Models\Interest::updateOrCreate(
+        Interest::updateOrCreate(
             ['sender_id' => auth()->id(), 'receiver_id' => $request->receiver_id],
             ['status' => 'pending']
         );
@@ -32,17 +33,29 @@ class InterestController extends Controller
     }
 
     // Aayi hui requests (Received) dekhne ke liye
+    // public function received()
+    // {
+    //     $user = Auth::user();
+    //     $image = UserProfile::where('user_id', Auth::id())->first();
+
+    //     // Fetching interests where current user is the receiver
+    //     $requests = Interest::where('receiver_id', $user->id)
+    //         ->with('sender',) // Eloquent relationship to get sender details
+    //         ->latest()
+    //         ->get();
+
+    //     return view('front.user.received_interests', compact('requests', 'user', 'image'));
+    // }
+
     public function received()
     {
-        $user = Auth::user();
-
-        // Fetching interests where current user is the receiver
-        $requests = Interest::where('receiver_id', $user->id)
-            ->with('sender') // Eloquent relationship to get sender details
+        $requests = auth()->user()
+            ->receivedInterests()
+            ->with(['sender.profile']) // nested eager loading
             ->latest()
             ->get();
 
-        return view('front.user.received_interests', compact('requests', 'user'));
+        return view('front.user.received_interests', compact('requests'));
     }
 
     // Status Update (Accept/Decline)

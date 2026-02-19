@@ -25,7 +25,7 @@ class DashboardController extends Controller
             // ->where('is_verified', true)
             ->withoutRole(['admin', 'Super Admin'])
             // ->limit(5)
-            ->with('profile')
+            // ->with('profile')
             ->get();
 
         return view('front.dashboard', compact('user', 'suggestedMatches', 'image'));
