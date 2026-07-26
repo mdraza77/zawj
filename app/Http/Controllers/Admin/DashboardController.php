@@ -11,8 +11,8 @@ class DashboardController extends Controller
 {
     public function index()
     {
-        $TotalUsers = User::withoutRole(['admin', 'Super Admin'])->count();
-        $TotalVerfiedUsers = User::withoutRole(['admin', 'Super Admin'])
+        $TotalUsers = User::withoutRole(['Admin', 'Super Admin'])->count();
+        $TotalVerfiedUsers = User::withoutRole(['Admin', 'Super Admin'])
             ->where('is_verified', 1) // Identity verified check
             ->whereNotNull('phone_verified_at') // Phone verification check
             ->whereNotNull('email_verified_at') // Email verification check

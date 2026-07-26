@@ -27,7 +27,7 @@ class UserSeeder extends Seeder
             ['email' => 'admin@gmail.com'],
             [
                 'name' => 'Super Admin',
-                'password' => Hash::make('Success2026$'),
+                'password' => Hash::make('Raza@Zawj'),
                 'is_verified' => 1,
             ]
         );
@@ -75,7 +75,7 @@ class UserSeeder extends Seeder
                 ['email' => $data['email']],
                 [
                     'name' => $data['name'],
-                    'password' => Hash::make('Success2026$'),
+                    'password' => Hash::make('Raza@Zawj'),
                     'gender' => $data['gender'],
                     'date_of_birth' => Carbon::now()->subYears(rand(20, 35))->format('Y-m-d'),
                     'phone' => '91' . rand(7000000000, 9999999999),

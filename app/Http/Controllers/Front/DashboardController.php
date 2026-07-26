@@ -21,7 +21,7 @@ class DashboardController extends Controller
 
         $suggestedMatches = User::where('id', '!=', $user->id)
             ->where('gender', $genderToFind)
-            ->withoutRole(['admin', 'Super Admin'])
+            ->withoutRole(['Admin', 'Super Admin'])
             ->get();
 
         $sentInterests = Interest::where('sender_id', $user->id)
@@ -48,7 +48,7 @@ class DashboardController extends Controller
 
     public function showProfile($id)
     {
-        $profileUser = User::withoutRole(['admin', 'Super Admin'])
+        $profileUser = User::withoutRole(['Admin', 'Super Admin'])
             ->with('profile')
             ->findOrFail($id);
 
